@@ -248,9 +248,11 @@
             animation: shake 0.2s ease-in-out;
         }
 
+        /* Tablet */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
+                margin-bottom: 1.5rem;
             }
             button {
                 font-size: 1.2rem;
@@ -258,6 +260,96 @@
             }
             #noBtn {
                 left: 150px;
+            }
+            .character {
+                width: 160px;
+                height: 160px;
+            }
+            .celebration {
+                padding: 2rem;
+                width: 80vw;
+                max-width: 400px;
+            }
+            .celebration h2 {
+                font-size: 2rem;
+            }
+            .celebration p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                padding: 0 0.5rem;
+            }
+            .button-container {
+                height: 60px;
+                gap: 0.5rem;
+            }
+            button {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+                border-radius: 8px;
+            }
+            #noBtn {
+                left: 120px;
+            }
+            .character {
+                width: 120px;
+                height: 120px;
+            }
+            .ear-left, .ear-right {
+                width: 28px;
+                height: 28px;
+                top: -6px;
+            }
+            .ear-left {
+                left: 20px;
+            }
+            .ear-right {
+                right: 20px;
+            }
+            .cat-face {
+                font-size: 1.4rem;
+            }
+            .belly {
+                width: 40px;
+                height: 28px;
+                bottom: 14px;
+            }
+            .celebration {
+                padding: 1.5rem;
+                width: 85vw;
+            }
+            .celebration h2 {
+                font-size: 1.5rem;
+            }
+            .celebration p {
+                font-size: 1rem;
+            }
+            .hearts {
+                font-size: 2rem;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            button {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+            #noBtn {
+                left: 100px;
+            }
+            .character {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
