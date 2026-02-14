@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ไปเที่ยววาเลนไทน์กันนะ?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #8b0000;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            padding: 0 1rem;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            height: 80px;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+            left: 180px;
+        }
+
+        .character {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .cat {
+            width: 100%;
+            height: 100%;
+            background-color: #87ceeb;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            border: 3px solid #000;
+        }
+
+        .cat-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            animation: blink 3s infinite;
+        }
+
+        @keyframes blink {
+            0%, 95%, 100% {
+                content: '>ᴗ<';
+            }
+            96%, 97% {
+                content: '-ᴗ-';
+            }
+        }
+
+        .ear-left, .ear-right {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #87ceeb;
+            border: 3px solid #000;
+            border-radius: 50% 50% 0 0;
+            top: -10px;
+            animation: wiggle 1.5s ease-in-out infinite;
+        }
+
+        .ear-left {
+            left: 30px;
+            transform: rotate(-20deg);
+        }
+
+        .ear-right {
+            right: 30px;
+            transform: rotate(20deg);
+            animation-delay: 0.2s;
+        }
+
+        @keyframes wiggle {
+            0%, 100% {
+                transform: rotate(-20deg);
+            }
+            50% {
+                transform: rotate(-25deg);
+            }
+        }
+
+        .belly {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            animation: breathe 2s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: translateX(-50%) scaleY(1);
+            }
+            50% {
+                transform: translateX(-50%) scaleY(1.1);
+            }
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .celebration h2 {
+            color: #ff1744;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .celebration p {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .hearts {
+            font-size: 3rem;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .floating-heart {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            animation: float-up 3s ease-in forwards;
+            z-index: 100;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes runAway {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.8) rotate(5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .running {
+            animation: runAway 0.3s ease-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shaking {
+            animation: shake 0.2s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+            #noBtn {
+                left: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>ไปเที่ยววาเลนไทน์กันนะ? 💕</h1>
+    
+    <div class="button-container">
+        <button id="yesBtn">ไปสิ!</button>
+        <button id="noBtn">แน่ใจเหรอ??</button>
+    </div>
+
+    <div class="character">
+        <div class="cat">
+            <div class="ear-left"></div>
+            <div class="ear-right"></div>
+            <div class="cat-face">>ᴗ<</div>
+            <div class="belly"></div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="celebration" id="celebration">
+        <div class="hearts">💕 💖 💕</div>
+        <h2>ยินดีด้วย! 🎉</h2>
+        <p>มีความสุขมากเลย! ไปเที่ยวกันเลย! 🎈✨</p>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const celebration = document.getElementById('celebration');
+        const overlay = document.getElementById('overlay');
+        let clickCount = 0;
+
+        const messages = [
+            "แน่ใจเหรอ??",
+            "คิดใหม่นะ! 🤔",
+            "ไปกันเถอะน้า? 😢",
+            "ได้โปรดเถอะนะ? 🥺",
+            "ไปด้วยกันสิ~ 💔",
+            "อย่าปฏิเสธเลย! 😭",
+            "ไปเที่ยวด้วยกันนะ 🥹",
+            "กดปุ่มไปสิดีกว่า! 💗"
+        ];
+
+        function runAway() {
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            noBtn.classList.add('running');
+            
+            setTimeout(() => {
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+                noBtn.classList.remove('running');
+            }, 150);
+
+            clickCount++;
+            if (clickCount < messages.length) {
+                noBtn.textContent = messages[clickCount];
+            }
+
+            createMiniHeart(randomX, randomY);
+        }
+
+        noBtn.addEventListener('mouseover', function() {
+            noBtn.classList.add('shaking');
+            setTimeout(() => {
+                noBtn.classList.remove('shaking');
+            }, 200);
+        });
+
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            runAway();
+        });
+
+        noBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            runAway();
+        });
+
+        yesBtn.addEventListener('click', function() {
+            overlay.style.display = 'block';
+            celebration.style.display = 'block';
+            createHearts();
+        });
+
+        function createMiniHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💔';
+            heart.style.position = 'fixed';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.fontSize = '20px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '500';
+            heart.style.transition = 'all 1s ease-out';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.style.transform = 'translateY(-100px)';
+                heart.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '-50px';
+                    heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+                    heart.style.zIndex = '1001';
+                    heart.style.transition = 'all 3s ease-in';
+                    heart.style.pointerEvents = 'none';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.top = '100vh';
+                        heart.style.opacity = '0';
+                        heart.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        setInterval(() => {
+            if (!celebration.style.display || celebration.style.display === 'none') {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '💗';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.bottom = '0';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
